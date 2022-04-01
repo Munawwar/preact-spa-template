@@ -1,0 +1,16 @@
+.root {
+  padding: 30px;
+  max-width: 960px;
+  margin: auto;
+  text-align: center;
+}
+
+.image {
+  display: block;
+  margin: auto;
+  width: 300px;
+}
+
+.text {
+  margin-top: 20px;
+}
