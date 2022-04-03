@@ -5,12 +5,13 @@ This template is tuned for "SPA" sites; sites that do not need server side rende
 Clone repo, use node.js 14+ and run following:
 ```
 npm ci
+cd tests; npm ci; cd ..
 npm run dev
 ```
 
 ## Features!
 
-- [preact](https://github.com/preactjs/preact) + preact hooks = 4 KB
+- [Preact](https://github.com/preactjs/preact) + Preact hooks = 4 KB
 - [Vite](https://vitejs.dev) and all the goodies that comes with it
 - [preact-router](https://github.com/preactjs/preact-router)
   - Code split by pages + lazy loaded (via [preact-lazy](https://github.com/iosio/preact-lazy)</a>)
@@ -25,10 +26,7 @@ npm run dev
 - SVG icon loader (with browser caching!)
 - [Yorkie](https://www.npmjs.com/package/yorkie) git push linting hook
 - [postcss-custom-media](https://www.npmjs.com/package/postcss-custom-media) plugin
-
-TODO:
-- Jest + Preact testing lib
-- lazy load page on mouse hover
+- Jest + [Preact testing library](https://preactjs.com/guide/v10/preact-testing-library/)
 
 ### About Routes
 

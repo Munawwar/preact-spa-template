@@ -18,7 +18,9 @@ export default defineConfig({
       generateScopedName(name, filename) {
         return `${
           (filename.match(/([^/\\]+?)(?:\.module).css(?:.*)$/) || ['', '_'])[1]
-        }-${name}-${hash(filename).toString(36).slice(0, 4)}`;
+        }-${name}-${hash(path.relative(__dirname, filename))
+          .toString(36)
+          .slice(0, 4)}`;
       },
     },
   },

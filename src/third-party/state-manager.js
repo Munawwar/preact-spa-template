@@ -85,7 +85,7 @@ function isEqual(a, b) {
   // both should be arrays or both should be objects
   const isArrA = Array.isArray(a);
   const isArrB = Array.isArray(b);
-  if (!((isArrA && isArrB) || (!isArrA && !isArrB))) return false;
+  if (isArrA ^ isArrB) return false;
 
   if (isArrA) {
     if (a.length != b.length) return false;

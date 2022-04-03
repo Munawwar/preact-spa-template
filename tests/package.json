@@ -1,0 +1,20 @@
+{
+  "name": "tests",
+  "scripts": {
+    "test": "jest ."
+  },
+  "jest": {
+    "testEnvironment": "jsdom"
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.16.7",
+    "@babel/plugin-transform-react-jsx": "^7.17.3",
+    "@babel/preset-env": "^7.16.11",
+    "@testing-library/jest-dom": "^5.16.3",
+    "@testing-library/preact": "^2.0.1",
+    "babel-plugin-css-modules-transform": "^1.6.2",
+    "babel-plugin-import-static-files": "^1.0.4",
+    "jest": "^27.5.1"
+  },
+  "dependencies": {}
+}

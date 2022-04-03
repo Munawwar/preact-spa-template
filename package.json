@@ -8,7 +8,8 @@
     "lint": "eslint --ext js,jsx src/",
     "lint-fix": "eslint --fix --ext js,jsx src/",
     "tsc": "tsc",
-    "lt": "echo 'linter running..' && npm run lint && echo 'type check running..' && tsc"
+    "lt": "echo 'linter running..' && npm run lint && echo 'type check running..' && tsc",
+    "test": "cd tests && npm run test"
   },
   "dependencies": {
     "preact": "^10.5.15",
