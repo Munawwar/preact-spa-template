@@ -69,6 +69,12 @@ It also removes fill color is present on parent svg.
 
 Tip: You can find material UI icons at https://github.com/material-icons/material-icons
 
+### Path aliases
+
+`~` is short hand for src/ directory. So you don't have to do `import '../../../js-file-in-src-directory'`. You can just do `import '~/js-file-in-src-directory'`
+
+Similarly for types, there is a shorthand alias `@` to the types/ directory. `import('@/RouteComponentProps')`
+
 ## Where to go next?
 
 - Check package.json - dependencies, scripts and eslint rules
