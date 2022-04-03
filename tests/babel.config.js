@@ -11,6 +11,14 @@ module.exports = function (api) {
   ];
   const plugins = [
     [
+      'babel-plugin-module-resolver',
+      {
+        alias: {
+          '~': '../src',
+        },
+      },
+    ],
+    [
       '@babel/plugin-transform-react-jsx',
       {
         runtime: 'automatic',

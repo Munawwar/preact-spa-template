@@ -3,7 +3,7 @@ import svgUrl from '../third-party/illustrations/well-done.svg';
 import styles from './Home.module.css';
 
 /**
- * @param {import('../../types/RouteComponentProps').RouteComponentProps} props
+ * @param {import('@/RouteComponentProps').RouteComponentProps} props
  */
 function Home(props) {
   return (

@@ -4,7 +4,14 @@
     "test": "jest ."
   },
   "jest": {
-    "testEnvironment": "jsdom"
+    "testEnvironment": "jsdom",
+    "moduleNameMapper": {
+      "~": "../src",
+      "^react$": "preact/compat",
+      "^react-dom/test-utils$": "preact/test-utils",
+      "^react-dom$": "preact/compat",
+      "^react/jsx-runtime$": "preact/jsx-runtime"
+    }
   },
   "devDependencies": {
     "@babel/plugin-proposal-class-properties": "^7.16.7",
@@ -14,6 +21,7 @@
     "@testing-library/preact": "^2.0.1",
     "babel-plugin-css-modules-transform": "^1.6.2",
     "babel-plugin-import-static-files": "^1.0.4",
+    "babel-plugin-module-resolver": "^4.1.0",
     "jest": "^27.5.1"
   },
   "dependencies": {}
