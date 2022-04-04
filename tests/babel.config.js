@@ -26,7 +26,7 @@ module.exports = function (api) {
       },
     ],
     '@babel/plugin-proposal-class-properties',
-    'babel-plugin-import-static-files',
+    'babel-plugin-transform-assets-import-to-string',
     [
       'css-modules-transform',
       {
