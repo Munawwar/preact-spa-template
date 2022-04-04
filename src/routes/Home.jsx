@@ -2,6 +2,8 @@ import { Link } from 'preact-router';
 import svgUrl from '../third-party/illustrations/well-done.svg';
 import styles from './Home.module.css';
 
+import { Button } from '~/third-party/tiny-ui';
+
 /**
  * @param {import('@/RouteComponentProps').RouteComponentProps} props
  */
@@ -26,6 +28,10 @@ function Home(props) {
       </p>
 
       <p>You are at the {props.title} page</p>
+
+      <div>
+        <Button>A tiny-ui button</Button>
+      </div>
     </div>
   );
 }

@@ -13,8 +13,9 @@ npm run dev
 
 ## Features!
 
-- [Preact](https://github.com/preactjs/preact) + Preact hooks = 4 KB
+- [Preact](https://github.com/preactjs/preact) + react compat = 11 KB
 - [Vite](https://vitejs.dev) and all the goodies that comes with it
+- [tiny-ui](https://tiny-ui.dev/guide/customise-theme) pre-configured
 - [preact-router](https://github.com/preactjs/preact-router)
   - Code split by pages + lazy loaded (via [preact-lazy](https://github.com/iosio/preact-lazy)</a>)
   - Manages browser history
@@ -47,6 +48,19 @@ Route components receives following properties about current route:
 - title: the title text used to set head title tag
 
 Path redirects can be configured in src/routes/redirects.js
+
+### About tiny-ui
+
+You can theme tiny ui at src/third-party/tiny-ui/theme.scss
+
+tiny-ui components don't import their own css. And we need a way to theme the components too.
+So I have chosen to re-export tiny-ui components with it's own scss file that includes the theme
+and the component's scss file. Check:
+ - src/third-party/tiny-ui/Button.scss
+ - src/third-party/tiny-ui/Button.jsx
+ - and src/third-party/tiny-ui/index.js
+
+I only did this for Button. If you want more tiny-ui component, you need follow the example of Button.
 
 ### About global state manager utility
 The state manager at src/third-party/state-manager follows the same
@@ -86,6 +100,7 @@ Similarly for types, there is a shorthand alias `@` to the types/ directory. `im
 - Check package.json - dependencies, scripts and eslint rules
 - Check the implementation of src/initialization/Router.jsx
 - Read about [preact/compat](https://preactjs.com/guide/v10/switching-to-preact/)
+- Read about [tiny-ui](https://tiny-ui.dev/)
 - Add or remove stuff as you need. Check out other tools:
   - Whole list of preact related tools at [awesome-preact](https://github.com/preactjs/awesome-preact)
   - Icons - [Material Icons](https://github.com/material-icons/material-icons)
