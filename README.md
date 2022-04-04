@@ -7,6 +7,8 @@ Clone repo, use node.js 14+ and run following:
 npm ci
 cd tests; npm ci; cd ..
 npm run dev
+
+# works with yarn and pnpm too
 ```
 
 ## Features!

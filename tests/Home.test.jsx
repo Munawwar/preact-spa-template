@@ -8,7 +8,7 @@ describe('Home', () => {
     render(<Home title="Home" />);
     await waitFor(() => {
       expect(
-        screen.getByText('You are at', {
+        screen.getByText('You are at the Home page', {
           exact: false,
           collapseWhitespace: true,
         })
