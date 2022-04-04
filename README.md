@@ -56,7 +56,7 @@ You can easily remove the three files if you don't want this state manager.
 
 SVG icon components are at src/components/icons. The SVG files for it are at src/third-party/icons/.
 
-If you want to add an SVG icon, you need to add `id="id"` into the `<svg>` element before using the SVG and then follow one of the icon component file at src/components/icons/ to convert the svg into a preact component.
+If you want to add an SVG icon, you need to add `id="id"` attribute into the `<svg>` tag before using the SVG and then follow one of the icon component file at src/components/icons/ to convert the svg into a preact component.
 
 Use src/third-party/icons/add-svg-id.js file provided to add the id.
 
@@ -65,7 +65,7 @@ node add-svg-id.js myicon.svg
 # or full directory
 # node add-svg-id.js .
 ```
-It also removes fill color is present on parent svg.
+It also removes fill color if present `<svg>` tag.
 
 Tip: You can find material UI icons at https://github.com/material-icons/material-icons
 
