@@ -1,2 +1,2 @@
 import './Button.scss';
-export { Button } from 'tiny-ui';
+export { default as Button } from 'tiny-ui/lib/button/button';
