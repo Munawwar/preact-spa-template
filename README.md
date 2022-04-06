@@ -38,11 +38,15 @@ You will notice that <code>lazy(() =&gt; import('./file'))</code> is
 used for lazy loading and bundling each page's JS into separate bundles
 for production.
 
+You can also manage page titles from routes.js. `title` must be a string (it can have placeholders from route pattern. e.g. `Orders | :orderId`) or a function that which receives route info and returns a string.
+
 Route components receives following properties about current route:
-- path: follows pattern as preact-router. you can also use pattern
-  matching e.g. `/user/:id` and the page will get an object named
-  `match` with the id part separated out.
-- title: sets head title tag. It's useful for users as it will appear on the browser tab and browser history
+- url: current page url
+- path: route pattern. e.g. `/user/:id`
+- matches: path matches (as an object). e.g: `{ id: 'user1' }`
+- title: the title text used to set head title tag
+
+Path redirects can be configured in src/routes/redirects.js
 
 ### About global state manager utility
 The state manager at src/third-party/state-manager follows the same
@@ -67,7 +71,7 @@ node add-svg-id.js myicon.svg
 # or full directory
 # node add-svg-id.js .
 ```
-It also removes fill color if present `<svg>` tag.
+It also removes fill color if present on `<svg>` tag.
 
 Tip: You can find material UI icons at https://github.com/material-icons/material-icons
 

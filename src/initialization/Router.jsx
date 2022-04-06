@@ -6,20 +6,22 @@ import routes from '../routes/routes';
 import redirects from './redirects';
 
 const RouteComponent = (props) => {
-  const { route, url, matches: match } = props;
+  const { route, url, matches } = props;
+  const title =
+    typeof route.title === 'function'
+      ? route.title(props)
+      : route.title.replace(/:([^\b]+)/g, (m, name) => matches?.[name] ?? m);
   return (
     <>
-      <Helmet
-        title={['Preact Vite SPA Starter Template', route.title].join(' | ')}
-      />
+      <Helmet title={['My App', route.title].join(' | ')} />
       <Layout
         component={route.Component}
         route={{
           routeId: route.routeId,
           path: route.path,
-          title: route.title,
+          title,
           url,
-          match,
+          matches,
         }}
       />
     </>

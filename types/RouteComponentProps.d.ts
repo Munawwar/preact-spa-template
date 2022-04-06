@@ -1,7 +1,7 @@
 export type RouteComponentProps = {
   routeId: string;
   title: string;
-  match: {
+  matches: {
     [param: string]: string,
   };
   path: string;
