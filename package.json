@@ -13,10 +13,8 @@
   },
   "dependencies": {
     "preact": "^10.5.15",
-    "preact-helmet": "^4.0.0-alpha-3",
     "preact-lazy": "^0.0.3",
-    "preact-router": "^4.0.1",
-    "smoldash": "^0.11.0"
+    "preact-router": "^4.0.1"
   },
   "devDependencies": {
     "@preact/preset-vite": "^2.1.5",

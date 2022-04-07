@@ -1,5 +1,5 @@
-import Helmet from 'preact-helmet';
 import { Router } from 'preact-router';
+import { useEffect } from 'preact/hooks';
 import Redirect from './Redirect';
 import Layout from './Layout';
 import routes from '../routes/routes';
@@ -7,24 +7,26 @@ import redirects from './redirects';
 
 const RouteComponent = (props) => {
   const { route, url, matches } = props;
+
   const title =
     typeof route.title === 'function'
       ? route.title(props)
       : route.title.replace(/:([^\b]+)/g, (m, name) => matches?.[name] ?? m);
+  useEffect(() => {
+    document.title = ['My App', route.title].join(' | ');
+  }, []);
+
   return (
-    <>
-      <Helmet title={['My App', route.title].join(' | ')} />
-      <Layout
-        component={route.Component}
-        route={{
-          routeId: route.routeId,
-          path: route.path,
-          title,
-          url,
-          matches,
-        }}
-      />
-    </>
+    <Layout
+      component={route.Component}
+      route={{
+        routeId: route.routeId,
+        path: route.path,
+        title,
+        url,
+        matches,
+      }}
+    />
   );
 };
 
