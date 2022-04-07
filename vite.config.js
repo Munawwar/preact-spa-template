@@ -8,7 +8,9 @@ import { visualizer } from 'rollup-plugin-visualizer';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [preact(), sassDts()],
+  plugins: [preact()].concat(
+    process.env.NODE_ENV !== 'production' ? sassDts() : []
+  ),
   build: {
     sourcemap: true,
     rollupOptions: {
