@@ -1,5 +1,6 @@
-// node.js script to cleanup svg
-// @ts-nocheck
+// node.js script to add id to svg and remove fill attribute.
+// (this is to allow the icon to be used from within a <use> tag)
+// Usage: node add-svg-id.js <path to svg file or directory>
 const fs = require('fs');
 const path = require('path');
 const { exit } = require('process');
