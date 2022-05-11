@@ -5,7 +5,7 @@ import CrashSvgUrl from '../third-party/illustrations/crash.svg';
 const Layout = (props) => {
   const { component: Page, route } = props;
   // You can add logging inside useErrorBoundary()
-  const [error] = useErrorBoundary();
+  const [error] = useErrorBoundary((err) => console.error(err));
 
   if (error) {
     return (

@@ -2,9 +2,13 @@
 // (this is to allow the icon to be used from within a <use> tag)
 // Usage: node add-svg-id.js <path to svg file or directory>
 // The files are replaced in-place. So better take a backup and verify the changes.
+// @ts-ignore
 const fs = require('fs');
+// @ts-ignore
 const path = require('path');
+// @ts-ignore
 const { exit } = require('process');
+// @ts-ignore
 const process = require('process');
 
 const id = 'id';
