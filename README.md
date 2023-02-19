@@ -1,6 +1,6 @@
-# Preact Vite SPA Starter Template
+# preact-spa-starter-template
 
-This template is tuned for "SPA" sites; sites that do not need server side rendering (SSR). If you need SSR, then this template won't work for you.
+Preact single-page app starter template. This template is tuned for "SPA" sites; sites that do not need server side rendering (SSR). If you need SSR, then take a look at [preact-mpa-starter-template](https://github.com/Munawwar/preact-mpa-starter-template).
 
 Clone repo, use node.js 14+ and run following:
 ```
