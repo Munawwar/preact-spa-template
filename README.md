@@ -23,7 +23,7 @@ npm run dev
   - Error Screen
 - [CSS Modules](https://github.com/css-modules/css-modules) - with eslint typo/unused css check and autocomplete
 - ESLint and Prettier
-- Type check via JSDocs and typescript compiler
+- Type check via JSDocs and typescript checker (tsc)
 - Simple global state manager
 - SVG icon loader (with browser caching!)
 - [Yorkie](https://www.npmjs.com/package/yorkie) git push linting hook
