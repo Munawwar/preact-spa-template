@@ -1,5 +1,5 @@
 {
-  "name": "preact-spa-starter-template",
+  "name": "preact-spa-template",
   "version": "0.0.1",
   "scripts": {
     "dev": "vite --mode development",

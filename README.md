@@ -1,6 +1,6 @@
-# preact-spa-starter-template
+# preact-spa-template
 
-Preact single-page app starter template. This template is tuned for "SPA" sites; sites that do not need server side rendering (SSR). If you need SSR, then take a look at [preact-mpa-starter-template](https://github.com/Munawwar/preact-mpa-starter-template).
+Preact single-page app starter template. This template is tuned for "SPA" sites; sites that do not need server side rendering (SSR). If you need SSR, then take a look at [preact-mpa-template](https://github.com/Munawwar/preact-mpa-template).
 
 Clone repo, use node.js 14+ and run following:
 ```
