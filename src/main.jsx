@@ -5,5 +5,5 @@ import './main.css';
 render(
   <Router />,
   // @ts-ignore
-  document.getElementById('app')
+  document.getElementById('app'),
 );

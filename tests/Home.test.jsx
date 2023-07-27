@@ -1,10 +1,10 @@
+import { describe, it, expect } from 'vitest';
 import { render, waitFor, screen } from '@testing-library/preact';
-import '@testing-library/jest-dom/extend-expect';
 
 import Home from '../src/routes/Home';
 
 describe('Home', () => {
-  test('should contain "you are at" text', async () => {
+  it('should contain "you are at" text', async () => {
     render(<Home title="Home" />);
     await waitFor(() => {
       expect(
@@ -16,3 +16,4 @@ describe('Home', () => {
     });
   });
 });
+
