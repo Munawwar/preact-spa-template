@@ -11,9 +11,8 @@ describe('Home', () => {
         screen.getByText('You are at the Home page', {
           exact: false,
           collapseWhitespace: true,
-        })
+        }),
       ).toBeInTheDocument();
     });
   });
 });
-

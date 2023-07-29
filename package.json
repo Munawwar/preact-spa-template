@@ -5,8 +5,8 @@
     "dev": "vite --mode development",
     "build": "vite build",
     "preview": "vite preview",
-    "lint": "eslint --ext js,jsx src/",
-    "lint-fix": "eslint --fix --ext js,jsx src/",
+    "lint": "eslint --ext js,jsx src/ tests/",
+    "lint-fix": "eslint --fix --ext js,jsx src/ tests/",
     "tsc": "tsc",
     "lt": "echo 'linter running..' && npm run lint && echo 'type check running..' && tsc",
     "test": "vitest"
