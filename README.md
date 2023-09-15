@@ -60,6 +60,6 @@ Similarly for types, there is a shorthand alias `@` to the types/ directory. `im
 - Add or remove stuff as you need. Check out other tools:
   - Whole list of preact related tools at [awesome-preact](https://github.com/preactjs/awesome-preact)
   - Icons - [Material Icons](https://github.com/material-icons/material-icons), [preact-svg-icon](https://www.npmjs.com/package/preact-svg-icon)
-  - CSS Libraries - [Open Props](https://open-props.style), [Tailwind](https://tailwindcss.com), 
+  - CSS Libraries - [Open Props](https://open-props.style), [Tailwind](https://tailwindcss.com)
   - UI Libraries - [Material UI](https://github.com/mui/material-ui/tree/master/examples/material-preact), [Preact Fluid](https://github.com/ajainvivek/preact-fluid)
-  - State manager - [unistore](https://github.com/developit/unistore)
+  - State managers - [unistore](https://github.com/developit/unistore), [nanostore](https://github.com/nanostores/nanostores), [query](https://github.com/nanostores/query)
