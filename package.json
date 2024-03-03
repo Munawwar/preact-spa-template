@@ -8,38 +8,38 @@
     "lint": "eslint --ext js,jsx src/ tests/",
     "lint-fix": "eslint --fix --ext js,jsx src/ tests/",
     "tsc": "tsc",
-    "lt": "echo 'linter running..' && npm run lint && echo 'type check running..' && tsc",
+    "checks": "echo 'linter running..' && npm run lint && echo 'type check running..' && tsc",
     "test": "vitest"
   },
   "dependencies": {
-    "preact": "^10.16.0",
+    "preact": "^10.19.6",
     "preact-lazy": "^0.0.3",
     "preact-router": "^4.1.2"
   },
   "devDependencies": {
-    "@preact/preset-vite": "^2.5.0",
+    "@preact/preset-vite": "^2.8.1",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/preact": "^3.2.3",
-    "eslint": "^8.45.0",
+    "eslint": "^8.57.0",
     "eslint-config-preact": "^1.3.0",
     "eslint-import-resolver-alias": "^1.1.2",
-    "eslint-plugin-css-modules": "^2.11.0",
-    "eslint-plugin-import": "^2.27.5",
-    "eslint-plugin-jsx-a11y": "^6.7.1",
-    "eslint-plugin-prettier": "^5.0.0",
-    "jsdom": "^22.1.0",
-    "postcss-custom-media": "^10.0.0",
-    "prettier": "^3.0.0",
-    "rollup-plugin-visualizer": "^5.9.2",
+    "eslint-plugin-css-modules": "^2.12.0",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-jsx-a11y": "^6.8.0",
+    "eslint-plugin-prettier": "^5.1.3",
+    "jsdom": "^24.0.0",
+    "postcss-custom-media": "^10.0.3",
+    "prettier": "^3.2.5",
+    "rollup-plugin-visualizer": "^5.12.0",
     "string-hash": "^1.1.3",
-    "typescript": "5.0.*",
-    "vite": "^4.4.7",
-    "vite-plugin-sass-dts": "^1.3.8",
-    "vitest": "^0.33.0",
+    "typescript": "5.3.*",
+    "vite": "^5.1.4",
+    "vite-plugin-sass-dts": "^1.3.17",
+    "vitest": "^1.3.1",
     "yorkie": "^2.0.0"
   },
   "gitHooks": {
-    "pre-push": "npm run lt"
+    "pre-push": "npm run checks"
   },
   "eslintConfig": {
     "extends": [
