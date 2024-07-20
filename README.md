@@ -15,8 +15,8 @@ npm run dev
 
 - [Preact](https://github.com/preactjs/preact) + Preact hooks = 4 KB
 - [Vite](https://vitejs.dev) and all the goodies that comes with it
-- [preact-router](https://github.com/preactjs/preact-router)
-  - Code split by pages + lazy loaded (via [preact-lazy](https://github.com/iosio/preact-lazy)</a>)
+- [preact-iso](https://github.com/preactjs/preact-iso)
+  - Code split by pages + lazy loaded
   - Manages browser history
   - Manage page title - so that it looks good on browser tab & browser back button history
   - 404 Screen

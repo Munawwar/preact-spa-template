@@ -1,4 +1,4 @@
-import lazy from 'preact-lazy';
+import { lazy } from 'preact-iso';
 
 // TODO: preact-lazy support loading screen
 const routes = [

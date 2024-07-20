@@ -1,9 +1,9 @@
 import { render } from 'preact';
-import Router from './initialization/Router';
+import App from './App';
 import './main.css';
 
 render(
-  <Router />,
+  <App />,
   // @ts-ignore
   document.getElementById('app'),
 );

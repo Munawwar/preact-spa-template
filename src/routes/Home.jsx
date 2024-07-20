@@ -1,4 +1,3 @@
-import { Link } from 'preact-router';
 import svgUrl from '../third-party/illustrations/well-done.svg';
 import styles from './Home.module.css';
 
@@ -19,10 +18,10 @@ function Home(props) {
 
       <h2>Check out other pages</h2>
       <p>
-        <Link href="/this-url-does-not-exist">404 Page</Link>
+        <a href="/this-url-does-not-exist">404 Page</a>
       </p>
       <p>
-        <Link href="/error">Error Page</Link>
+        <a href="/error">Error Page</a>
       </p>
 
       <p>You are at the {props.title} page</p>

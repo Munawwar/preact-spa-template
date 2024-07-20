@@ -13,8 +13,8 @@
   },
   "dependencies": {
     "preact": "^10.19.6",
-    "preact-lazy": "^0.0.3",
-    "preact-router": "^4.1.2"
+    "preact-iso": "^2.6.3",
+    "preact-lazy": "^0.0.3"
   },
   "devDependencies": {
     "@preact/preset-vite": "^2.8.1",

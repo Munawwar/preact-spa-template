@@ -1,7 +1,12 @@
 import { useErrorBoundary } from 'preact/hooks';
-import ErrorLayout from '../components/layout/ErrorLayout';
-import CrashSvgUrl from '../third-party/illustrations/crash.svg';
+import ErrorLayout from './ErrorLayout';
+import CrashSvgUrl from '../../third-party/illustrations/crash.svg';
 
+/**
+ * @param {object} props
+ * @param {import('preact').ComponentType} props.component
+ * @param {import('./../../../types/RouteComponentProps')} props.route
+ */
 const Layout = (props) => {
   const { component: Page, route } = props;
   // You can add logging inside useErrorBoundary()
@@ -12,7 +17,7 @@ const Layout = (props) => {
       <ErrorLayout
         imageUrl={CrashSvgUrl}
         imageAlt="Unexpected error"
-        header="Ooops! Something went wrong."
+        header="Oops! Something went wrong."
         footer={
           <>
             We apologize for the inconvenience.
@@ -23,6 +28,8 @@ const Layout = (props) => {
       />
     );
   }
+
+  // Your layout can be much more complex than this. Don't you want a side menu?
   return <Page {...route} />;
 };
 
