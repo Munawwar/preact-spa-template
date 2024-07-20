@@ -3,6 +3,7 @@
 Preact single-page app starter template. This template is tuned for "SPA" sites; sites that do not need server side rendering (SSR). If you need SSR, then take a look at [preact-mpa-template](https://github.com/Munawwar/preact-mpa-template).
 
 Clone repo, use node.js 14+ and run following:
+
 ```
 npm ci
 npm run dev
@@ -35,6 +36,8 @@ for production.
 You can also manage page titles from routes.js. `title` must be a string (it can have placeholders from route pattern. e.g. `Orders | :orderId`) or a function that which receives route info and returns a string.
 
 Route components receives following properties about current route:
+
+- url: `url` without origin and URI fragment. e.g '/user/123?tab=subscription'
 - path: route pattern. e.g. `/user/:id`
 - params: path matches (as an object). e.g: `{ id: 'user1' }`
 - title: the title text used to set head title tag

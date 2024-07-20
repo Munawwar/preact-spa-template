@@ -1,21 +1,19 @@
-import { LocationProvider, ErrorBoundary, Router, useLocation } from 'preact-iso';
+import { LocationProvider, ErrorBoundary, Router, useLocation, useRoute } from 'preact-iso';
 import { useEffect, useLayoutEffect } from 'preact/hooks';
 import Layout from './components/layout/AppLayout';
 import routes from './routes/routes';
 import redirects from './routes/redirects';
 
 /**
- * Other that `route` these rest are undocumented fields from preact-iso
  * @param {object} props
  * @param {import('@/Route').Route} props.route
  * @param {string} props.path
- * @param {Record<string, string>} props.params
- * @param {Record<string, string>} props.query
- * @param {string} props.rest
  * @param {boolean} [props.default]
  */
 const RouteComponent = (props) => {
-  const { route, params, query, rest } = props;
+  const { route } = props;
+  const { params, query } = useRoute();
+  const { url } = useLocation();
 
   const title =
     typeof route.title === 'function'
@@ -35,9 +33,9 @@ const RouteComponent = (props) => {
         default: route.default,
         title,
         // preact router props
+        url,
         params,
         query,
-        rest,
       }}
     />
   );
@@ -61,7 +59,6 @@ function App() {
       <ErrorBoundary>
         <Router>
           {routes.map((route) => (
-            // @ts-expect-error preact-iso router injects more props than the ones listed here
             <RouteComponent key={route.path} path={route.path} route={route} default={route.default} />
           ))}
         </Router>

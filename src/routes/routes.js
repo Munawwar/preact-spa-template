@@ -9,6 +9,12 @@ const routes = [
     Component: lazy(() => import('./Home')),
   },
   {
+    routeId: 'user',
+    title: 'User',
+    path: '/user/:id',
+    Component: lazy(() => import('./Home')),
+  },
+  {
     routeId: 'error',
     title: 'Error Test Page',
     path: '/error',
