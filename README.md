@@ -5,10 +5,7 @@ Preact single-page app starter template. This template is tuned for "SPA" sites;
 Clone repo, use node.js 14+ and run following:
 ```
 npm ci
-cd tests; npm ci; cd ..
 npm run dev
-
-# works with yarn and pnpm too
 ```
 
 ## Features!
@@ -21,12 +18,11 @@ npm run dev
   - Manage page title - so that it looks good on browser tab & browser back button history
   - 404 Screen
   - Error Screen
-- [CSS Modules](https://github.com/css-modules/css-modules) - with eslint typo/unused css check and autocomplete
+- [CSS Modules](https://github.com/css-modules/css-modules) - with eslint typo/unused css check and autocomplete (it is easy to remove this and use tailwind)
 - ESLint and Prettier
 - Type check via JSDocs and typescript checker (tsc)
 - [Yorkie](https://www.npmjs.com/package/yorkie) git push linting hook
-- [postcss-custom-media](https://www.npmjs.com/package/postcss-custom-media) plugin
-- [Vitest](https://vitest.dev/) + [Preact testing library](https://preactjs.com/guide/v10/preact-testing-library/)
+- [Vitest](https://vitest.dev/) + [Preact testing library](https://preactjs.com/guide/v10/preact-testing-library/) + [Playwright](https://playwright.dev/)
 
 ### About Routes
 
@@ -39,10 +35,11 @@ for production.
 You can also manage page titles from routes.js. `title` must be a string (it can have placeholders from route pattern. e.g. `Orders | :orderId`) or a function that which receives route info and returns a string.
 
 Route components receives following properties about current route:
-- url: current page url
 - path: route pattern. e.g. `/user/:id`
-- matches: path matches (as an object). e.g: `{ id: 'user1' }`
+- params: path matches (as an object). e.g: `{ id: 'user1' }`
 - title: the title text used to set head title tag
+- query: query params (as an object). e.g: `{ search: 'john' }`
+- routeId: the routeId used in route.js
 
 Path redirects can be configured in src/routes/redirects.js
 
@@ -50,16 +47,16 @@ Path redirects can be configured in src/routes/redirects.js
 
 `~` is short hand for src/ directory. So you don't have to do `import '../../../js-file-in-src-directory'`. You can just do `import '~/js-file-in-src-directory'`
 
-Similarly for types, there is a shorthand alias `@` to the types/ directory. `import('@/RouteComponentProps')`
+Similarly for types, there is a shorthand alias `@` to the types/ directory. e.g. `import('@/Route').PageComponent`
 
 ## Where to go next?
 
 - Check package.json - dependencies, scripts and eslint rules
-- Check the implementation of src/initialization/Router.jsx
+- Check the implementation of src/App.jsx
 - Read about [preact/compat](https://preactjs.com/guide/v10/switching-to-preact/)
 - Add or remove stuff as you need. Check out other tools:
   - Whole list of preact related tools at [awesome-preact](https://github.com/preactjs/awesome-preact)
   - Icons - [Material Icons](https://github.com/material-icons/material-icons), [preact-svg-icon](https://www.npmjs.com/package/preact-svg-icon)
-  - CSS Libraries - [Open Props](https://open-props.style), [Tailwind](https://tailwindcss.com)
+  - CSS Libraries - [Open Props](https://open-props.style), [Tailwind](https://tailwindcss.com), [Fluid][https://fluid.tw/]
   - UI Libraries - [Material UI](https://github.com/mui/material-ui/tree/master/examples/material-preact), [Preact Fluid](https://github.com/ajainvivek/preact-fluid)
   - State managers - [unistore](https://github.com/developit/unistore), [nanostore](https://github.com/nanostores/nanostores), [query](https://github.com/nanostores/query)

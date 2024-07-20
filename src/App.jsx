@@ -1,34 +1,43 @@
-import {
-  LocationProvider,
-  ErrorBoundary,
-  Router,
-  useLocation,
-} from 'preact-iso';
+import { LocationProvider, ErrorBoundary, Router, useLocation } from 'preact-iso';
 import { useEffect, useLayoutEffect } from 'preact/hooks';
 import Layout from './components/layout/AppLayout';
 import routes from './routes/routes';
-import redirects from './redirects';
+import redirects from './routes/redirects';
 
+/**
+ * Other that `route` these rest are undocumented fields from preact-iso
+ * @param {object} props
+ * @param {import('@/Route').Route} props.route
+ * @param {string} props.path
+ * @param {Record<string, string>} props.params
+ * @param {Record<string, string>} props.query
+ * @param {string} props.rest
+ * @param {boolean} [props.default]
+ */
 const RouteComponent = (props) => {
-  const { route, url, matches } = props;
+  const { route, params, query, rest } = props;
 
   const title =
     typeof route.title === 'function'
       ? route.title(props)
-      : route.title.replace(/:([^\b]+)/g, (m, name) => matches?.[name] ?? m);
+      : route.title.replace(/:([^\b]+)/g, (m, name) => params?.[name] ?? m);
   useEffect(() => {
-    document.title = ['My App', route.title].join(' | ');
+    document.title = ['My App', title].join(' | ');
   }, []);
 
   return (
     <Layout
       component={route.Component}
-      route={{
+      componentProps={{
+        // route metadata
         routeId: route.routeId,
         path: route.path,
+        default: route.default,
         title,
-        url,
-        matches,
+        // preact router props
+        params,
+        query,
+        rest,
       }}
     />
   );
@@ -52,12 +61,8 @@ function App() {
       <ErrorBoundary>
         <Router>
           {routes.map((route) => (
-            <RouteComponent
-              key={route.path}
-              path={route.path}
-              route={route}
-              default={route.default}
-            />
+            // @ts-expect-error preact-iso router injects more props than the ones listed here
+            <RouteComponent key={route.path} path={route.path} route={route} default={route.default} />
           ))}
         </Router>
       </ErrorBoundary>

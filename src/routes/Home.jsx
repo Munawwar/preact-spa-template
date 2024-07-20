@@ -1,9 +1,7 @@
 import svgUrl from '../third-party/illustrations/well-done.svg';
 import styles from './Home.module.css';
 
-/**
- * @param {import('@/RouteComponentProps').RouteComponentProps} props
- */
+/** @type {import('@/Route').PageComponent} */
 function Home(props) {
   return (
     <div class={styles.root}>

@@ -4,11 +4,11 @@ import CrashSvgUrl from '../../third-party/illustrations/crash.svg';
 
 /**
  * @param {object} props
- * @param {import('preact').ComponentType} props.component
- * @param {import('./../../../types/RouteComponentProps')} props.route
+ * @param {import('@/Route').PageComponent} props.component
+ * @param {import('@/Route').PageComponentProps} props.componentProps
  */
 const Layout = (props) => {
-  const { component: Page, route } = props;
+  const { component: Page, componentProps } = props;
   // You can add logging inside useErrorBoundary()
   const [error] = useErrorBoundary((err) => console.error(err));
 
@@ -30,7 +30,7 @@ const Layout = (props) => {
   }
 
   // Your layout can be much more complex than this. Don't you want a side menu?
-  return <Page {...route} />;
+  return <Page {...componentProps} />;
 };
 
 export default Layout;

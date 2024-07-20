@@ -1,41 +1,38 @@
 {
   "name": "preact-spa-template",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "scripts": {
     "dev": "vite --mode development",
     "build": "vite build",
     "preview": "vite preview",
-    "lint": "eslint --ext js,jsx src/ tests/",
-    "lint-fix": "eslint --fix --ext js,jsx src/ tests/",
+    "lint": "eslint --ext js,jsx src/ tests/ && prettier --check src/ tests/",
+    "lint-fix": "eslint --fix --ext js,jsx src/ tests/ && prettier --log-level warn --write src/ tests/",
     "tsc": "tsc",
     "checks": "echo 'linter running..' && npm run lint && echo 'type check running..' && tsc",
-    "test": "vitest"
+    "test": "vitest --run"
   },
   "dependencies": {
     "preact": "^10.19.6",
-    "preact-iso": "^2.6.3",
-    "preact-lazy": "^0.0.3"
+    "preact-iso": "^2.6.3"
   },
   "devDependencies": {
     "@preact/preset-vite": "^2.8.1",
-    "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/preact": "^3.2.3",
+    "@vitest/browser": "^2.0.3",
     "eslint": "^8.57.0",
     "eslint-config-preact": "^1.3.0",
     "eslint-import-resolver-alias": "^1.1.2",
     "eslint-plugin-css-modules": "^2.12.0",
     "eslint-plugin-import": "^2.29.1",
     "eslint-plugin-jsx-a11y": "^6.8.0",
-    "eslint-plugin-prettier": "^5.1.3",
-    "jsdom": "^24.0.0",
-    "postcss-custom-media": "^10.0.3",
+    "playwright": "^1.45.2",
     "prettier": "^3.2.5",
     "rollup-plugin-visualizer": "^5.12.0",
     "string-hash": "^1.1.3",
-    "typescript": "5.3.*",
-    "vite": "^5.1.4",
+    "typescript": "^5.5.3",
+    "vite": "^5.3.4",
     "vite-plugin-sass-dts": "^1.3.17",
-    "vitest": "^1.3.1",
+    "vitest": "^2.0.3",
     "yorkie": "^2.0.0"
   },
   "gitHooks": {
@@ -50,16 +47,9 @@
     ],
     "plugins": [
       "jsx-a11y",
-      "prettier",
       "css-modules"
     ],
     "rules": {
-      "prettier/prettier": [
-        "error",
-        {
-          "singleQuote": true
-        }
-      ],
       "import/extensions": [
         "error",
         {
@@ -119,9 +109,8 @@
       }
     }
   },
-  "postcss": {
-    "plugins": {
-      "postcss-custom-media": {}
-    }
+  "prettier": {
+    "printWidth": 120,
+    "singleQuote": true
   }
 }

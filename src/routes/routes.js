@@ -1,6 +1,6 @@
 import { lazy } from 'preact-iso';
 
-// TODO: preact-lazy support loading screen
+/** @type {import('@/Route').Route[]} */
 const routes = [
   {
     routeId: 'home',
@@ -12,6 +12,7 @@ const routes = [
     routeId: 'error',
     title: 'Error Test Page',
     path: '/error',
+    // @ts-ignore
     Component: lazy(() => import('./ErrorTest')),
   },
   {

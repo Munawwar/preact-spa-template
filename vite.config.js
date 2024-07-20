@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite';
 import path from 'path';
 import preact from '@preact/preset-vite';
+// @ts-ignore
 import hash from 'string-hash';
 // eslint-disable-next-line import/no-unresolved
 import sassDts from 'vite-plugin-sass-dts';
@@ -9,7 +10,8 @@ import { visualizer } from 'rollup-plugin-visualizer';
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [preact()].concat(
-    process.env.NODE_ENV !== 'production' ? sassDts() : []
+    // @ts-ignore
+    process.env.NODE_ENV !== 'production' ? sassDts() : [],
   ),
   build: {
     sourcemap: true,
@@ -40,7 +42,13 @@ export default defineConfig({
   },
   test: {
     globals: true,
-    environment: 'jsdom',
+    browser: {
+      enabled: true,
+      provider: 'playwright',
+      name: 'chromium',
+      ui: false,
+      headless: true,
+    },
     setupFiles: './tests/setup.js',
   },
 });
