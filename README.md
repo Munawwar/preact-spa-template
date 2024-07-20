@@ -56,7 +56,18 @@ Similarly for types, there is a shorthand alias `@` to the types/ directory. e.g
 - Read about [preact/compat](https://preactjs.com/guide/v10/switching-to-preact/)
 - Add or remove stuff as you need. Check out other tools:
   - Whole list of preact related tools at [awesome-preact](https://github.com/preactjs/awesome-preact)
-  - Icons - [Material Icons](https://github.com/material-icons/material-icons), [preact-svg-icon](https://www.npmjs.com/package/preact-svg-icon)
-  - CSS Libraries - [Open Props](https://open-props.style), [Tailwind](https://tailwindcss.com), [Fluid][https://fluid.tw/]
-  - UI Libraries - [Material UI](https://github.com/mui/material-ui/tree/master/examples/material-preact), [Preact Fluid](https://github.com/ajainvivek/preact-fluid)
-  - State managers - [unistore](https://github.com/developit/unistore), [nanostore](https://github.com/nanostores/nanostores), [query](https://github.com/nanostores/query)
+  - Icons
+    - [Material Icons](https://github.com/material-icons/material-icons)
+    - Remove SVG from JS with [preact-svg-icon](https://www.npmjs.com/package/preact-svg-icon)
+  - CSS Libraries
+    - [Open Props](https://open-props.style)
+    - [Tailwind](https://tailwindcss.com)
+    - [Fluid](https://fluid.tw/)
+  - UI Libraries
+    - [Material UI](https://github.com/mui/material-ui/tree/master/examples/material-preact)
+    - [Preact Fluid](https://github.com/ajainvivek/preact-fluid)
+  - State managers
+    - [Preact Signals](https://preactjs.com/guide/v10/signals/)
+    - [Tanstack Query with Preact Signals](https://www.npmjs.com/package/@preact-signals/query)
+    - [nanostore](https://github.com/nanostores/nanostores)
+    - [query with nanostore](https://github.com/nanostores/query)
