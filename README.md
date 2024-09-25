@@ -56,7 +56,7 @@ Similarly for types, there is a shorthand alias `@` to the types/ directory. e.g
 
 - Check package.json - dependencies, scripts and eslint rules
 - Check the implementation of src/App.jsx
-- Read about [preact/compat](https://preactjs.com/guide/v10/switching-to-preact/)
+- Read about [preact/compat](https://preactjs.com/guide/v10/switching-to-preact/) (Last I checked charting libraries like recharts 2, ag-charts-react works without problems)
 - Add or remove stuff as you need. Check out other tools:
   - Whole list of preact related tools at [awesome-preact](https://github.com/preactjs/awesome-preact)
   - Icons
@@ -69,6 +69,7 @@ Similarly for types, there is a shorthand alias `@` to the types/ directory. e.g
   - UI Libraries
     - [Material UI](https://github.com/mui/material-ui/tree/master/examples/material-preact)
     - [Preact Fluid](https://github.com/ajainvivek/preact-fluid)
+    - Tiny charting library - [Preact Chartist](https://www.npmjs.com/package/preact-chartist)
   - State managers
     - [Preact Signals](https://preactjs.com/guide/v10/signals/)
     - [Tanstack Query with Preact Signals](https://www.npmjs.com/package/@preact-signals/query)
