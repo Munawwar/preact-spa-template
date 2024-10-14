@@ -1,8 +1,15 @@
 import svgUrl from '../third-party/illustrations/well-done.svg';
 import styles from './Home.module.css';
 
+export const preload = () => Promise.resolve();
+
 /** @type {import('@/Route').PageComponent} */
 function Home(props) {
+  // const { data, loading, error, refetch } = useData({
+  //   fetch: preload,
+  //   preloadPromise: props.preloadPromise,
+  //   deps: [],
+  // });
   return (
     <div class={styles.root}>
       <h1 style={{ textAlign: 'center' }}>Preact Vite SPA Starter Template</h1>

@@ -1,10 +1,12 @@
 {
   "name": "preact-spa-template",
   "version": "0.1.0",
+  "type": "module",
   "scripts": {
-    "dev": "vite --mode development",
+    "dev": "node server.js",
+    "prod": "NODE_ENV=production node server.js",
     "build": "vite build",
-    "preview": "vite preview",
+    "preview": "vite build && npx --package=local-web-server@5.4.0 ws -p 5173 -d dist --http2",
     "lint": "eslint --ext js,jsx src/ tests/ && prettier --check src/ tests/",
     "lint-fix": "eslint --fix --ext js,jsx src/ tests/ && prettier --log-level warn --write src/ tests/",
     "tsc": "tsc",
@@ -12,26 +14,30 @@
     "test": "vitest --run"
   },
   "dependencies": {
-    "preact": "^10.19.6",
+    "compression": "^1.7.4",
+    "express": "^4.21.1",
+    "preact": "^10.24.2",
     "preact-iso": "^2.6.3"
   },
   "devDependencies": {
-    "@preact/preset-vite": "^2.8.1",
+    "@preact/preset-vite": "^2.9.1",
     "@testing-library/preact": "^3.2.3",
+    "@vitejs/plugin-basic-ssl": "^1.1.0",
     "@vitest/browser": "^2.0.3",
     "eslint": "^8.57.0",
     "eslint-config-preact": "^1.3.0",
     "eslint-import-resolver-alias": "^1.1.2",
     "eslint-plugin-css-modules": "^2.12.0",
-    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-import-x": "^4.3.1",
     "eslint-plugin-jsx-a11y": "^6.8.0",
     "playwright": "^1.45.2",
     "prettier": "^3.2.5",
     "rollup-plugin-visualizer": "^5.12.0",
     "string-hash": "^1.1.3",
-    "typescript": "^5.5.3",
-    "vite": "^5.3.4",
-    "vite-plugin-sass-dts": "^1.3.17",
+    "typescript": "^5.6.2",
+    "vite": "^5.4.8",
+    "vite-plugin-preload": "^0.4.2",
+    "vite-plugin-sass-dts": "^1.3.29",
     "vitest": "^2.0.3",
     "yorkie": "^2.0.0"
   },
@@ -42,7 +48,7 @@
     "extends": [
       "preact",
       "plugin:jsx-a11y/recommended",
-      "plugin:import/recommended",
+      "plugin:import-x/recommended",
       "plugin:css-modules/recommended"
     ],
     "plugins": [
@@ -50,7 +56,7 @@
       "css-modules"
     ],
     "rules": {
-      "import/extensions": [
+      "import-x/extensions": [
         "error",
         {
           "js": "never",
@@ -78,11 +84,12 @@
       ]
     },
     "settings": {
-      "import/extensions": [
+      "import-x/extensions": [
         ".js",
         ".jsx"
       ],
-      "import/resolver": {
+      "import-x/resolver": {
+        "node": true,
         "alias": {
           "map": [
             [

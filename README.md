@@ -19,11 +19,24 @@ npm run dev
   - Manage page title - so that it looks good on browser tab & browser back button history
   - 404 Screen
   - Error Screen
+- Use a server and get JS and CSS preloading
 - [CSS Modules](https://github.com/css-modules/css-modules) - with eslint typo/unused css check and autocomplete (it is easy to remove this and use tailwind)
 - ESLint and Prettier
 - Type check via JSDocs and typescript checker (tsc)
 - [Yorkie](https://www.npmjs.com/package/yorkie) git push linting hook
 - [Vitest](https://vitest.dev/) + [Preact testing library](https://preactjs.com/guide/v10/preact-testing-library/) + [Playwright](https://playwright.dev/)
+
+### Server? Why?
+
+You can upload your index.html to any static file hosting service (like AWS S3) and it will work. But understand that there will be a delay when the page loads.
+
+How loading of a typical SPA works: HTML loads, then index.js loads, then route.js loads, then route's dependencies loads. These are happening in serial order. However if you have a server (doesn't matter which language; there are examples in `backend-examples/` directory), then you can preload all the dependencies in parallel (including CSS).
+
+I suggest you to use a server anyway for other reasons. If you put your index.html file on a static hosting service (like AWS S3), then where will your APIs be served from? On another sub-domain? But then every POST request will causes a CORS preflight, which slows down calls unnecessarily, even with Access-Control-Max-Age header (for every new URL path user fetches, there will be a preflight request because it is not in the cache).
+
+You can avoid CORS preflight requests altogether by having APIs on the same domain as the HTML. Also avoid cross domain cookie issues, by having APIs on the same domain.
+
+So you're thinking, "ok so where will JS,CSS,images be served from?". It can be served from the same server under same domain, or you could upload JS/CSS/images to a static hosting service and place that behind a CDN on a subdomain. "aha, but you just re-introduced CORS!". Nope. `<link>` and `<script>` tags can easily accommodate JS & CSS from a subdomain. You probably will use a CDN anyway if your backend server doesn't support HTTP/2 (I recommend HTTP/2 or above for static files; it reduces waterfall requests as most browsers limit number of parallel HTTP/1 requests to `6` parallel requests).
 
 ### About Routes
 

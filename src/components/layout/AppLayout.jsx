@@ -1,6 +1,8 @@
+import { lazy } from 'preact-iso';
 import { useErrorBoundary } from 'preact/hooks';
-import ErrorLayout from './ErrorLayout';
 import CrashSvgUrl from '../../third-party/illustrations/crash.svg';
+
+const ErrorLayout = lazy(() => import('./ErrorLayout'));
 
 /**
  * @param {object} props
