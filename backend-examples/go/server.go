@@ -91,17 +91,19 @@ func main() {
 		}
 
 		headContent := []string{}
+		endHeadContent := []string{}
 		if matchingRoute.Title != "" {
 			headContent = append(headContent, fmt.Sprintf("<title>%s</title>", matchingRoute.Title))
 		}
 		for _, js := range preloadJS {
-			headContent = append(headContent, fmt.Sprintf(`<link rel="modulepreload" crossorigin href="%s">`, js))
+			headContent = append(headContent, fmt.Sprintf(`  <link rel="modulepreload" crossorigin href="%s">`, js))
 		}
 		for _, css := range preloadCSS {
-			headContent = append(headContent, fmt.Sprintf(`<link rel="stylesheet" crossorigin href="%s" as="style">`, css))
+			endHeadContent = append(endHeadContent, fmt.Sprintf(`  <link rel="stylesheet" crossorigin href="%s">`, css))
 		}
 
 		html := strings.Replace(string(template), "<!-- ssr-head-placeholder -->", strings.Join(headContent, "\n"), 1)
+		html = strings.Replace(string(html), "</head>", strings.Join(endHeadContent, "\n") + "\n</head>", 1)
 
 		w.Header().Set("Content-Type", "text/html")
 		w.Write([]byte(html))

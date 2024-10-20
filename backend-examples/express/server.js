@@ -2,60 +2,22 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { publicURLPath } from './paths.js'
+import express from 'express'
+import { publicURLPath } from '../../paths.js'
 import http from 'node:http';
-import http2 from 'node:http2';
 // eslint-disable-next-line import-x/extensions
 import { exec as preactIsoUrlPatternMatch } from 'preact-iso/router'
-import Fastify from 'fastify'
-import fastifyStatic from '@fastify/static'
-import fastifyCompress from '@fastify/compress'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
-const rootDir = __dirname;
+const rootDir = path.resolve(__dirname, '../../');
 
 // Constants
-const isProduction = process.env.NODE_ENV === 'production';
-const HTTP2 = process.env.HTTP2 === 'true' || !isProduction;
+const isProduction = process.env.NODE_ENV === 'production'
 const PORT = process.env.PORT || 5173;
 
-const devKeyPath = path.resolve(rootDir, 'certs/local.key');
-const devCertPath = path.resolve(rootDir, 'certs/local.crt');
-const host = HTTP2 ? 'my-app.test' : 'localhost';
-
-if (HTTP2 && !fs.existsSync(devKeyPath)) {
-  const devcert = (await import('@expo/devcert')).default;
-  const { key, cert } = await devcert.certificateFor(host);
-  fs.mkdirSync(path.resolve(rootDir, 'certs/'), { recursive: true });
-  fs.writeFileSync(devKeyPath, key, 'utf8');
-  fs.writeFileSync(devCertPath, cert, 'utf8');
-}
-
-let fastifyHandler;
-const server = HTTP2
-  ? http2.createSecureServer({
-    key: fs.readFileSync(devKeyPath, 'utf8'),
-    cert: fs.readFileSync(devCertPath, 'utf8')
-  }, (req, res) => {
-    fastifyHandler(req, res);
-  })
-  : http.createServer((req, res) => {
-    fastifyHandler(req, res);
-  });
-const fastify = Fastify({
-  ...(HTTP2 ? {
-    http2: true,
-    https: {
-      key: fs.readFileSync(devKeyPath, 'utf8'),
-      cert: fs.readFileSync(devCertPath, 'utf8'),
-      allowHTTP1: true // Fallback to HTTP/1 if client doesn't support HTTP/2
-    },
-  } : {}),
-  serverFactory(handler) {
-    fastifyHandler = handler;
-    return server;
-  }
-});
+const app = express()
+// we need to create a server ourselves if we want to use HMR server
+const server = http.createServer(app);
 
 let vite
 let clientSideManagedRoutes;
@@ -73,24 +35,27 @@ if (!isProduction) {
     appType: 'custom',
     base: '/',
     clearScreen: false,
+    configFile: path.resolve(rootDir, 'vite.config.js'),
+    root: rootDir,
   })
-  await fastify.register(import('@fastify/middie'))
-  await fastify.use(vite.middlewares)
+  app.use(vite.middlewares)
 } else {
-  await fastify.register(fastifyCompress)
-  await fastify.register(fastifyStatic, {
-    root: path.resolve(rootDir, 'dist'),
-    prefix: publicURLPath,
-    maxAge: '1w',
-    index: false,
-  })
+  const compression = (await import('compression')).default
+  app.use(compression())
+  app.use(
+    publicURLPath,
+    express.static(path.resolve(rootDir, 'dist'), {
+      maxAge: '1w',
+      index: false,
+    })
+  )
   clientSideManagedRoutes = JSON.parse(fs.readFileSync(path.resolve(rootDir, 'dist/routes.json'), 'utf-8'))
   viteProdManifest = JSON.parse(fs.readFileSync(path.resolve(rootDir, 'dist/.vite/manifest.json'), 'utf-8'))
 }
 
-fastify.all('*', async (request, reply) => {
+app.use('*', async (req, res) => {
   try {
-    const url = request.url;
+    const url = req.originalUrl;
 
     let template
     let html;
@@ -101,12 +66,11 @@ fastify.all('*', async (request, reply) => {
       html = template.replace('<!-- ssr-head-placeholder -->', '')
     } else {
       template = fs.readFileSync(path.resolve(rootDir, 'dist/index.html'), 'utf-8')
-      const { pathname } = new URL(request.url, 'http://localhost:5173');
       // TODO: preload mode JS and add fetches
       const {
         title,
         Component: entryFileName
-      } = clientSideManagedRoutes.find((route) => preactIsoUrlPatternMatch(pathname, route.path, { params: {} })) || {};
+      } = clientSideManagedRoutes.find((route) => preactIsoUrlPatternMatch(req.path, route.path, { params: {} })) || {};
       const manifestEntry = viteProdManifest[entryFileName];
       const preloadJS = (manifestEntry?.imports || [])
         .concat(manifestEntry?.file)
@@ -122,15 +86,15 @@ fastify.all('*', async (request, reply) => {
       html = html.replace('</head>', `${stylesheetTags}\n</head>`);
     }
 
-    reply.code(200).header('Content-Type', 'text/html').send(html)
+    res.status(200).set({ 'Content-Type': 'text/html' }).send(html)
   } catch (e) {
     vite?.ssrFixStacktrace(e)
     console.log(e.stack)
-    reply.code(500).send(e.stack)
+    res.status(500).end(e.stack)
   }
 })
 
-fastify.listen({ port: PORT, host }, (err) => {
-  if (err) throw err
-  console.log(`Listening on ${HTTP2 ? 'https' : 'http'}://${host}:${PORT}`)
+server.listen(PORT, 'localhost')
+server.on('listening', () => {
+  console.log(`Listening on http://localhost:${PORT}`)
 })

@@ -32,7 +32,7 @@ get '/*' do
   head_content = [
     title ? "<title>#{title}</title>" : nil,
     *preload_js.map { |js| %(<link rel="modulepreload" crossorigin href="#{js}">) },
-    *preload_css.map { |css| %(<link rel="stylesheet" crossorigin href="#{css}" as="style">) }
+    *preload_css.map { |css| %(<link rel="stylesheet" crossorigin href="#{css}">) }
   ].compact.join("\n")
 
   html = template.sub('<!-- ssr-head-placeholder -->', head_content)

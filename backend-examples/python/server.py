@@ -52,7 +52,7 @@ def catch_all(path):
         head_content = '\n'.join([
             f"<title>{title}</title>" if title else '',
             *[f'<link rel="modulepreload" crossorigin href="{js}">' for js in preload_js],
-            *[f'<link rel="stylesheet" crossorigin href="{css}" as="style">' for css in preload_css]
+            *[f'<link rel="stylesheet" crossorigin href="{css}">' for css in preload_css]
         ])
 
         html = template.replace('<!-- ssr-head-placeholder -->', head_content)

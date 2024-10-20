@@ -1,0 +1,17 @@
+{
+  "name": "express",
+  "version": "1.0.0",
+  "module": "server.js",
+  "type": "module",
+  "scripts": {
+    "dev": "node server.js",
+    "prod": "NODE_ENV=production node server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "compression": "^1.7.4",
+    "express": "^4.21.1"
+  }
+}

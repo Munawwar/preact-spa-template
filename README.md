@@ -7,6 +7,7 @@ Clone repo, use node.js 14+ and run following:
 ```
 npm ci
 npm run dev
+# when you run this the first time, `@expo/devcert` could ask root permissions to generate a certificate for local development server.
 ```
 
 ## Features!

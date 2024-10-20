@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "dev": "node server.js",
-    "prod": "NODE_ENV=production node server.js",
+    "prod": "NODE_ENV=production HTTP2=true node server.js",
     "build": "vite build",
     "preview": "vite build && npx --package=local-web-server@5.4.0 ws -p 5173 -d dist --http2",
     "lint": "eslint --ext js,jsx src/ tests/ && prettier --check src/ tests/",
@@ -14,12 +14,15 @@
     "test": "vitest --run"
   },
   "dependencies": {
-    "compression": "^1.7.4",
-    "express": "^4.21.1",
+    "@fastify/compress": "^8.0.1",
+    "@fastify/middie": "^9.0.2",
+    "@fastify/static": "^8.0.2",
+    "fastify": "^5.0.0",
     "preact": "^10.24.2",
     "preact-iso": "^2.6.3"
   },
   "devDependencies": {
+    "@expo/devcert": "^1.1.4",
     "@preact/preset-vite": "^2.9.1",
     "@testing-library/preact": "^3.2.3",
     "@vitejs/plugin-basic-ssl": "^1.1.0",
