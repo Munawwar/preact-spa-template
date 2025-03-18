@@ -3,7 +3,7 @@
 ```sh
 # Install  uv (Linux, Mac)
 curl -LsSf https://astral.sh/uv/install.sh | sh
-uv venv
+uv venv --python=3.13
 uv pip install -r requirements.txt
 ```
 
@@ -11,4 +11,6 @@ uv pip install -r requirements.txt
 
 ```sh
 uv run server.py
+# or
+# FLASK_ENV=production uv run server.py
 ```
