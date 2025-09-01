@@ -6,9 +6,8 @@
     "dev": "bash -c \"node server.js\"",
     "prod": "NODE_ENV=production HTTP2=true bash -c \"node server.js\"",
     "//dev-prod-comment": "we are explicitly using bash as npm uses `sh` internally which on debian may swallow signals like SIGTERM - https://github.com/npm/cli/issues/6684#issuecomment-2567262280",
-
     "build": "vite build",
-    "preview": "vite build && npx --package=local-web-server@5.4.0 ws -p 5173 -d dist --http2",
+    "preview": "vite build && npx ws -p 5173 -d dist --http2",
     "lint": "eslint --ext js,jsx src/ tests/ && prettier --check src/ tests/",
     "lint-fix": "eslint --fix --ext js,jsx src/ tests/ && prettier --log-level warn --write src/ tests/",
     "tsc": "tsc",
@@ -36,6 +35,7 @@
     "eslint-plugin-import-x": "^4.3.1",
     "eslint-plugin-jsx-a11y": "^6.8.0",
     "eslint-plugin-no-closure": "^1.0.1",
+    "local-web-server": "^5.4.0",
     "playwright": "^1.45.2",
     "prettier": "^3.2.5",
     "rollup-plugin-visualizer": "^5.12.0",
