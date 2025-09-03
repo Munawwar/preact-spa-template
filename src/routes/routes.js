@@ -14,10 +14,10 @@ function lazy(func) {
 /**
  * This function is solely to please typescript
  * @template {string} PathPattern
- * @template {Omit<import('@/Route').Route<PathPattern>, 'path'>} Options
+ * @template {Omit<import('@/Route').RouteDefinition<PathPattern>, 'path'>} Options
  * @param {PathPattern} path
  * @param {Options} options
- * @returns {import('@/Route').Route<PathPattern>}
+ * @returns {import('@/Route').RouteDefinition<PathPattern>}
  */
 const route = (path, options) => ({ path, ...options });
 
@@ -39,8 +39,8 @@ const routes = [
     getPrefetchUrls: () => ({ '/api/test': '/api/test' }),
   }),
 
-  route('/home', {
-    routeId: 'home',
+  route('/home/:example', {
+    routeId: 'home-example',
     title: 'Home',
     Component: lazy(() => import('./Home')),
     // eslint-no-closure
@@ -65,7 +65,6 @@ const routes = [
     // @ts-ignore
     Component: lazy(() => import('./ErrorTest')),
   }),
-
   route('', {
     routeId: '404',
     title: 'Page Not Found',

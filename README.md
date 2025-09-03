@@ -83,13 +83,14 @@ Path redirects can be configured in `src/routes/redirects.js`
 
 `~` is short hand for src/ directory. So you don't have to do `import '../../../js-file-in-src-directory'`. You can just do `import '~/js-file-in-src-directory'`
 
-Similarly for types, there is a shorthand alias `@` to the types/ directory. e.g. `import('@/Route').PageComponent`
+Similarly for types, there is a shorthand alias `@` to the types/ directory. e.g. `import('@/Route').RouteProps`
 
 ## Preloading on hover
 
 I've forked [instant.page](https://instant.page) to work with preact-iso and vite. If you want to change the behavior of the preloading, then check their documented [intensity options](https://instant.page/intensity).
 
 You can only test this on prod build (as vite doesn't provide a manifest on dev build):
+
 ```sh
 npm run build
 npm run prod

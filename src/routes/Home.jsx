@@ -3,8 +3,12 @@ import svgUrl from '../third-party/illustrations/well-done.svg';
 import styles from './Home.module.css';
 
 /**
- * @template {'/' | '/home'} T
- * @param {import('@/Route').PageComponentProps<T>} props
+ * @template {string} Path
+ * @typedef {import('@/Route').RouteProps<Path>} RouteProps<Path>
+ */
+
+/**
+ * @param {RouteProps<'/'> | RouteProps<'/home/:example'>} props
  */
 function Home(props) {
   const { data, error, loading } = useFetch(

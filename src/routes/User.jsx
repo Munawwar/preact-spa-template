@@ -2,8 +2,7 @@ import useFetch from '~/useFetch';
 import styles from './User.module.css';
 
 /**
- * @template {'/user/:id'} T
- * @param {import('@/Route').PageComponentProps<T>} props
+ * @param {import('@/Route').RouteProps<'/user/:id'>} props
  */
 function User(props) {
   const { data, error, loading } = useFetch(

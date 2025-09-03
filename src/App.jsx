@@ -10,7 +10,7 @@ import redirects from './routes/redirects';
  * @template {string} T
  * @param {object} props
  * @param {T} props.path
- * @param {import('@/Route').Route<T>} props.route
+ * @param {import('@/Route').RouteDefinition<T>} props.route
  * @param {boolean} [props.default]
  */
 const RouteComponent = (props) => {

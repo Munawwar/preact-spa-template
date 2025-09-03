@@ -1,20 +1,20 @@
 /* eslint import-x/extensions: ["error", { "js": "always" }] */
-import fs from 'node:fs'
-import pathModule from 'node:path'
-import { fileURLToPath } from 'node:url'
-import { publicURLPath } from './paths.js'
+import fs from 'node:fs';
+import pathModule from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { publicURLPath } from './paths.js';
 import http from 'node:http';
 import https from 'node:https';
 import http2 from 'node:http2';
 // eslint-disable-next-line import-x/extensions
 // @ts-ignore
 // eslint-disable-next-line import-x/extensions
-import { exec as preactIsoUrlPatternMatch } from 'preact-iso/router'
-import Fastify from 'fastify'
-import fastifyStatic from '@fastify/static'
+import { exec as preactIsoUrlPatternMatch } from 'preact-iso/router';
+import Fastify from 'fastify';
+import fastifyStatic from '@fastify/static';
 // import fastifyCompress from '@fastify/compress'
 
-const __dirname = pathModule.dirname(fileURLToPath(import.meta.url))
+const __dirname = pathModule.dirname(fileURLToPath(import.meta.url));
 const rootDir = __dirname;
 
 // Constants
@@ -41,42 +41,48 @@ if (HTTP2 && !fs.existsSync(devKeyPath)) {
 let fastifyHandler;
 const server = HTTP2
   ? http2.createSecureServer(
-    {
-      key: fs.readFileSync(devKeyPath, 'utf8'),
-      cert: fs.readFileSync(devCertPath, 'utf8'),
-    },
-    (...args) => fastifyHandler(...args)
-  )
+      {
+        key: fs.readFileSync(devKeyPath, 'utf8'),
+        cert: fs.readFileSync(devCertPath, 'utf8'),
+      },
+      (...args) => fastifyHandler(...args),
+    )
   : http.createServer((...args) => fastifyHandler(...args));
 // On dev, when using HTTP2, we need to create a separate HTTPS+HTTP1 server for HMR to work
-const hmrServer = !isProduction && HTTP2
-  ? https.createServer({
-    key: fs.readFileSync(devKeyPath, 'utf8'),
-    cert: fs.readFileSync(devCertPath, 'utf8'),
-  }, (...args) => fastifyHandler(...args))
-  : undefined;
+const hmrServer =
+  !isProduction && HTTP2
+    ? https.createServer(
+        {
+          key: fs.readFileSync(devKeyPath, 'utf8'),
+          cert: fs.readFileSync(devCertPath, 'utf8'),
+        },
+        (...args) => fastifyHandler(...args),
+      )
+    : undefined;
 
 const fastify = Fastify({
-  ...(HTTP2 ? {
-    http2: true,
-    https: {
-      key: fs.readFileSync(devKeyPath, 'utf8'),
-      cert: fs.readFileSync(devCertPath, 'utf8'),
-      allowHTTP1: true // Fallback to HTTP/1 if client doesn't support HTTP/2
-    },
-  } : {}),
+  ...(HTTP2
+    ? {
+        http2: true,
+        https: {
+          key: fs.readFileSync(devKeyPath, 'utf8'),
+          cert: fs.readFileSync(devCertPath, 'utf8'),
+          allowHTTP1: true, // Fallback to HTTP/1 if client doesn't support HTTP/2
+        },
+      }
+    : {}),
   // @ts-ignore
   serverFactory(handler) {
     fastifyHandler = handler;
     return server;
-  }
+  },
 });
 
 /** @type {import('vite').ViteDevServer} */
-let vite
+let vite;
 /**
  * @typedef {Omit<
- *   import('@/Route').Route<string>, 'Component' | 'getPrefetchUrls'
+ *   import('@/Route').RouteDefinition<string>, 'Component' | 'getPrefetchUrls'
  * > & { Component: string, getPrefetchUrls?: string }} ManifestRoute
  */
 
@@ -99,7 +105,7 @@ let defaultRoute = null;
 let viteProdManifest;
 // On local, use vite's middlewares
 if (!isProduction) {
-  const { createServer } = await import('vite')
+  const { createServer } = await import('vite');
   vite = await createServer({
     server: {
       middlewareMode: true,
@@ -109,15 +115,15 @@ if (!isProduction) {
         port: hmrServer ? HMR_PORT : undefined,
         protocol: HTTP2 ? 'wss' : 'ws',
         clientPort: hmrServer ? HMR_PORT : undefined,
-      }
+      },
     },
     appType: 'custom',
     base: '/',
     // publicDir: pathModule.resolve(rootDir, 'dist'),
     clearScreen: false,
-  })
-  await fastify.register(import('@fastify/middie'))
-  await fastify.use(vite.middlewares)
+  });
+  await fastify.register(import('@fastify/middie'));
+  await fastify.use(vite.middlewares);
 } else {
   // Fastify compression middleware is buggy. The JSON.stringify() in the inline JS from
   // getInlinePrefetchCode() function below is causing the compression middleware to fail.
@@ -135,19 +141,19 @@ if (!isProduction) {
         // one-week caching
         res.setHeader('cache-control', 'public, max-age=604800, must-revalidate');
       }
-    }
-  })
-  clientSideManagedRoutes = JSON.parse(fs.readFileSync(pathModule.resolve(rootDir, 'dist/routes.json'), 'utf-8'))
-  viteProdManifest = JSON.parse(fs.readFileSync(pathModule.resolve(rootDir, 'dist/.vite/manifest.json'), 'utf-8'))
+    },
+  });
+  clientSideManagedRoutes = JSON.parse(fs.readFileSync(pathModule.resolve(rootDir, 'dist/routes.json'), 'utf-8'));
+  viteProdManifest = JSON.parse(fs.readFileSync(pathModule.resolve(rootDir, 'dist/.vite/manifest.json'), 'utf-8'));
   defaultRoute = clientSideManagedRoutes.find((route) => route.default) || null;
 }
 
 /**
- * @param {string} getPrefetchUrlsFuncCode 
- * @param {Parameters<NonNullable<import('@/Route').PageComponentProps<string>['getPrefetchUrls']>>[0]} route
+ * @param {string} getPrefetchUrlsFuncCode
+ * @param {Parameters<NonNullable<import('@/Route').RouteProps<string>['getPrefetchUrls']>>[0]} route
  */
 function getInlinePrefetchCode(getPrefetchUrlsFuncCode, route) {
-  const param = JSON.stringify(route)
+  const param = JSON.stringify(route);
   return `<script>(window.prefetchUrlsPromise = Promise.resolve((${getPrefetchUrlsFuncCode})(${param}))).then(m=>Object.entries(m).forEach(([,u])=>{
     let d=document.createElement('link')
     d.rel='preload'
@@ -155,28 +161,28 @@ function getInlinePrefetchCode(getPrefetchUrlsFuncCode, route) {
     d.crossOrigin='anonymous'
     d.href=u
     document.head.appendChild(d)
-  }))</script>`
+  }))</script>`;
 }
 
 // eslint-disable-next-line prefer-arrow-callback
 fastify.get('/api/test', async function getTestData() {
   return { test: 'test' };
-})
+});
 
 fastify.all('*', async (req, reply) => {
   try {
     const url = req.url; // this doesn't contain the origin, but does contain query params. e.g. /api/test?foo=bar
-    let template
+    let template;
     let html;
     let status = 200;
     if (!isProduction) {
       // Always read fresh template in development
-      template = fs.readFileSync(pathModule.resolve(rootDir, 'index.html'), 'utf-8')
+      template = fs.readFileSync(pathModule.resolve(rootDir, 'index.html'), 'utf-8');
       // @ts-ignore
-      template = await vite.transformIndexHtml(url, template)
-      html = template.replace('<!-- ssr-head-placeholder -->', '')
+      template = await vite.transformIndexHtml(url, template);
+      html = template.replace('<!-- ssr-head-placeholder -->', '');
     } else {
-      template = fs.readFileSync(pathModule.resolve(rootDir, 'dist/index.html'), 'utf-8')
+      template = fs.readFileSync(pathModule.resolve(rootDir, 'dist/index.html'), 'utf-8');
       const origin = `${req.protocol}://${req.host}`;
       const { pathname } = new URL(url, origin);
       /** @type {{ [name: string]: string }} */
@@ -184,15 +190,11 @@ fastify.all('*', async (req, reply) => {
       const found = /** @type {ManifestRoute} */ (
         clientSideManagedRoutes.find((route) => {
           params = {};
-          return preactIsoUrlPatternMatch(pathname, route.path, { params })
-        })
-        || defaultRoute
+          return preactIsoUrlPatternMatch(pathname, route.path, { params });
+        }) || defaultRoute
       );
       // for requests like /favicon.ico don't spend time rendering 404 page
-      if (found === defaultRoute && (
-        defaultRoute === null
-        || (url.split('/').pop() || '').includes('.')
-      )) {
+      if (found === defaultRoute && (defaultRoute === null || (url.split('/').pop() || '').includes('.'))) {
         reply.code(404).send('Not Found');
         return;
       }
@@ -204,37 +206,43 @@ fastify.all('*', async (req, reply) => {
         routeId,
         path,
       } = found;
-      const title = typeof found.title === 'function'
-        ? found.title({ path, route: found, default: isDefault })
-        : typeof found.title === 'string'
-          ? found.title.replace(/:([\w]+)/g, (m, name) => params?.[name] ?? m)
-          : '';
+      const title =
+        typeof found.title === 'function'
+          ? found.title({ path, route: found, default: isDefault })
+          : typeof found.title === 'string'
+            ? found.title.replace(/:([\w]+)/g, (m, name) => params?.[name] ?? m)
+            : '';
       const manifestEntry = viteProdManifest[entryFileName];
       const preloadJS = [entryFileName]
         .concat(manifestEntry?.imports || [])
-        .filter(file => (
-          file
-          && viteProdManifest[file]?.file
-          && !file.endsWith('.html') // why are .html files in manifest imports list?
-        ))
-        .map((file) => `${publicURLPath}/${viteProdManifest[file].file}`)
-      const preloadCSS = (manifestEntry?.css || [])
-        .map((file) => `${publicURLPath}/${file}`);
-      html = template.replace('<!-- ssr-head-placeholder -->', [
-        title ? `<title>${title}</title>` : '',
-        ...preloadJS.map((js) => `  <link rel="modulepreload" crossorigin href="${js}">`),
-        getPrefetchUrlsFuncCode ? getInlinePrefetchCode(getPrefetchUrlsFuncCode, {
-          url,
-          path,
-          params,
-          query: /** @type {Record<string, string>} */ (req.query),
-          default: isDefault,
-          routeId,
-        }) : '',
-      ].join('\n'))
+        .filter(
+          (file) =>
+            file && viteProdManifest[file]?.file && !file.endsWith('.html'), // why are .html files in manifest imports list?
+        )
+        .map((file) => `${publicURLPath}/${viteProdManifest[file].file}`);
+      const preloadCSS = (manifestEntry?.css || []).map((file) => `${publicURLPath}/${file}`);
+      html = template.replace(
+        '<!-- ssr-head-placeholder -->',
+        [
+          title ? `<title>${title}</title>` : '',
+          ...preloadJS.map((js) => `  <link rel="modulepreload" crossorigin href="${js}">`),
+          getPrefetchUrlsFuncCode
+            ? getInlinePrefetchCode(getPrefetchUrlsFuncCode, {
+                url,
+                path,
+                params,
+                query: /** @type {Record<string, string>} */ (req.query),
+                default: isDefault,
+                routeId,
+              })
+            : '',
+        ].join('\n'),
+      );
       const endTags = [
         ...preloadCSS.map((css) => `  <link rel="stylesheet" crossorigin href="${css}">`),
-        ...(preload ? preload.map(({ as, href }) => `  <link rel="preload" as="${as}" crossorigin href="${href}">`) : []),
+        ...(preload
+          ? preload.map(({ as, href }) => `  <link rel="preload" as="${as}" crossorigin href="${href}">`)
+          : []),
       ].join('\n');
       html = html.replace('</head>', `${endTags}\n</head>`);
       if (isDefault) {
@@ -242,16 +250,16 @@ fastify.all('*', async (req, reply) => {
       }
     }
 
-    reply.code(status).header('Content-Type', 'text/html').send(html)
+    reply.code(status).header('Content-Type', 'text/html').send(html);
   } catch (e) {
     // @ts-ignore
-    vite?.ssrFixStacktrace(e)
+    vite?.ssrFixStacktrace(e);
     // @ts-ignore
-    console.log(e?.stack)
+    console.log(e?.stack);
     // @ts-ignore
-    reply.code(500).send(e?.stack)
+    reply.code(500).send(e?.stack);
   }
-})
+});
 
 if (hmrServer) {
   hmrServer.listen(HMR_PORT, host, () => {
@@ -260,6 +268,6 @@ if (hmrServer) {
 }
 
 fastify.listen({ port: PORT, host }, (err) => {
-  if (err) throw err
-  console.log(`Server listening on ${HTTP2 ? 'https' : 'http'}://${host}:${PORT}`)
-})
+  if (err) throw err;
+  console.log(`Server listening on ${HTTP2 ? 'https' : 'http'}://${host}:${PORT}`);
+});

@@ -14,7 +14,7 @@ type PreactIsoUrlPatternMatch<Re extends string> = Re extends ''
           ? PreactIsoUrlPatternMatch<rest>
           : { params: {} };
 
-export type RouteStaticProps<T extends string> = {
+export type RouteDefinitionStaticProps<T extends string> = {
   /** Route pattern as defined in 'src/routes/routes.js'. e.g. '/user/:id' */
   path: T;
 } & {
@@ -24,7 +24,7 @@ export type RouteStaticProps<T extends string> = {
   default?: boolean;
 };
 
-export type PageComponentBaseProps<T extends string> = RouteStaticProps<T> & {
+export type RouteMatchInfo<T extends string> = RouteDefinitionStaticProps<T> & {
   /** URL from preact-iso useLocation() hook. It is part of the URI without origin and URI fragment. e.g '/user/123?tab=subscription' */
   url: string;
   /** params from preact-iso useRoute() hook. e.g { id: '123' } */
@@ -33,13 +33,12 @@ export type PageComponentBaseProps<T extends string> = RouteStaticProps<T> & {
   query: Record<string, string>;
 };
 
-export type PageComponentProps<T extends string> = PageComponentBaseProps<T> & {
+// "Route props" more accurately means "Page component props", but it's a longer name to type
+export type RouteProps<T extends string> = RouteMatchInfo<T> & {
   /** Page title as defined in 'src/routes/routes.js' */
   title: string;
   /** Same getPrefetchUrls function defined in 'src/routes/routes.js' */
-  getPrefetchUrls?: (
-    param: PageComponentBaseProps<T>,
-  ) => { [key: string]: string } | Promise<{ [key: string]: string }>;
+  getPrefetchUrls?: (param: RouteMatchInfo<T>) => { [key: string]: string } | Promise<{ [key: string]: string }>;
   /**
    * URLs that were already requested to be prefetched by the inline bootstrapping
    * JS using the getPrefetchUrls function.
@@ -47,14 +46,14 @@ export type PageComponentProps<T extends string> = PageComponentBaseProps<T> & {
   prefetchUrlsPromise?: Promise<{ [key: string]: string }>;
 };
 
-export type Route<T extends string> = RouteStaticProps<T> & {
+export type RouteDefinition<T extends string> = RouteDefinitionStaticProps<T> & {
   /**
    * Title can have placeholders for URL pattern params that begins with a colon `:`
    * (e.g. `Order Summary (:orderId)`).
    * Or use a JS function, but it cannot be re-used in a non-JS backend.
    */
   title: string | ((props: object) => string);
-  Component: (props: PageComponentProps<T>) => import('preact/jsx-runtime').JSX.Element | null;
+  Component: (props: RouteProps<T>) => import('preact/jsx-runtime').JSX.Element | null;
   /**
    * Static preload links that will be inlined into HTML head tag.
    *
@@ -84,7 +83,9 @@ export type Route<T extends string> = RouteStaticProps<T> & {
    * Even though "prefetching" uses link rel="preload" tags, they have lower priority
    * than server rendered preload tags as they are being created from browser JS.
    */
-  getPrefetchUrls?: PageComponentProps<T>['getPrefetchUrls'];
+  getPrefetchUrls?: RouteProps<T>['getPrefetchUrls'];
 };
 
-export type PageComponent<T extends string> = Route<T>['Component'];
+export type Route<T extends string> = RouteDefinition<T>['Component'];
+
+export as namespace RouteTypes;
